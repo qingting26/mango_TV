@@ -1,0 +1,64 @@
+{% extends 'dianying.html' %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bo_fang.css' %}">
+{% endblock %}
+{% block container %}
+    <section class="public_width">
+        <dl class="video_con">
+            <dt class="video_con_title">{{ sku.name }}</dt>
+
+            <figure class="video_con_show tab">
+                <div class="video_bofang tab-box">
+                    <div class="video_con_show_con">
+                        {#                            <video width="900" height="630" controls>#}
+                        {#                              <source src="video/name.mp4" type="video/mp4">#}
+                        {#                            </video>#}
+                        <img src="{{ sku.image.url }}" style="width: 900px; height: 630px">
+                    </div>
+                    <div class="video_con_show_con">
+                        <video width="900" height="630" controls>
+                            <source src="video/txjg.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video_con_show_con">
+                        <video width="900" height="630" controls>
+                            <source src="video/name.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video_con_show_con">
+                        <video width="900" height="630" controls>
+                            <source src="video/ywzxhts.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video_con_show_con">
+                        <video width="900" height="630" controls>
+                            <source src="video/name.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <figcaption class="video_show_zs">
+                    {#                <div class="video_show_zj">#}
+                    {#                    <img class="video_show_zj_img" src="images/p1.jpg">#}
+                    {#                    <p class="video_show_zj_js">#}
+                    {#                        <b class="video_show_zj_name">第4期：姐姐重组3人团</b>#}
+                    {#                        <span class="video_show_zj_zc"></span>#}
+                    {#                    </p>#}
+                    {#                </div>#}
+                    <span class="video_show_title">播放列表</span>
+                    <ul class="video_show_con tab-menu">
+                        {% for item in sku_s %}
+                            <li class="video_show_list"><a href="http://127.0.0.1:8000/movie/{{ item.id }}"><img
+                                    src="{{ item.image.url }}"><span>{{ item.name }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </figcaption>
+            </figure>
+        </dl>
+    </section>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/bofang_.js' %}"></script>
+{% endblock %}
+
+

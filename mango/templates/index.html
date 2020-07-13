@@ -1,0 +1,155 @@
+{% extends 'base_forms.html' %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block apple-banner %}
+    <div class="apple-banner">
+        <nav class="navbar navbar-fixed-top navbar-transparent" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://127.0.0.1:8000/"><img alt="index"
+                                                                               src="{% static 'image/mango_logo.png' %}"
+                                                                               style="height: 40px; width: 160px; margin-top: -5px"></a>
+                    <a class="navbar-brand" href="#"><img alt="index" src="{% static 'image/xxsk.png' %}"
+                                                          style="height: 30px; width: 60px; margin-top: 2px"></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form navbar-left" action="/search" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="q"
+                                       style="background: transparent; border-radius: 20px; border: rgba(99,131,117,0.8)"
+                                       placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default"
+                                    style="border-radius: 20px; background-color: #FC9700; border: 1px solid #FC9700; color: white">
+                                全网搜
+                            </button>
+                        </form>
+                        <li><a href="#">会员</a></li>
+                        <li><a href="#">创作投稿</a></li>
+                        <li><a href="#">饭团</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="{% url 'record:record' %}">看过</a></li>
+                        <li><a href="#">客户端</a></li>
+                        <li><a href="{% url 'record:record' %}">个人信息</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% for banner in movie_banner %}
+                    <div class="swiper-slide"
+                         style="background: #000 url('{{ banner.image.url }}') no-repeat 50% 10%;
+                                 background-size: 1770px 800px; cursor: pointer">
+                        <a href="http://127.0.0.1:8000/movie/{{ banner.sku.id }}">
+                            <h2 class="title txt"
+                                style="margin-top: 100px; margin-left: 100px">{{ banner.sku.name }}</h2>
+                            </h2></a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-prev"><span></span></div>
+            <div class="swiper-button-next"><span></span></div>
+            <ul class="swiper-pagination autoplay">
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block container %}
+    <div class="main container">
+        <div class="nav_one">
+            <nav class="nav_left">
+                <ul>
+                    {% for type in types %}
+                        <li><a href="http://127.0.0.1:8000/list/{{ type.id }}/0" class="{{ type.logo }}"><img
+                                src="{{ type.image.url }}">{{ type.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <nav class="nav_right">
+                <ul>
+                    {% for a in move_sku %}
+                        <li><a href="http://127.0.0.1:8000/list/1/{{ a.id }}" class="well-to-do">{{ a.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+        <div class="today_hot">
+            <h2>今日热门</h2>
+            <p class="today_p" id="today_left"> > </p>
+            <p class="today_p" id="today_right"> < </p>
+            <ul id="ul_l">
+                {% for item in movie_vip %}
+                    <li style="background-image: url('{{ item.image.url }}')"
+                        href="http://127.0.0.1:8000/movie/{{ item.sku.id }}"><a
+                            href="http://127.0.0.1:8000/movie/{{ item.sku.id }}">{{ item.sku.name }}</a><br><span>{{ item.sku.desc }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% for movie_a in types %}
+            <div class="variety">
+                <div class="hot_variety">
+                    <h2><a href="http://127.0.0.1:8000/list/{{ movie_a.id }}/0">{{ movie_a.name }}</a></h2>
+                    <p class="variety_p"> > </p>
+                    <p class="variety_p"> < </p>
+                    {% for movie_l in movie_logo %}
+                        {% if movie_l.type.name == movie_a.name %}
+                            <div class="variety_w" style="background-image: url('{{ movie_l.sku.image.url }}');"><a
+                                    href="http://127.0.0.1:8000/movie/{{ movie_l.sku.id }}">{{ movie_l.sku.name }}</a><br><span>{{ movie_l.sku.desc }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <ul id="ul_t">
+                        {% for movie_s in move_all %}
+                            {% if movie_s.type.name == movie_a.name %}
+                                <li style="background-image: url('{{ movie_s.image.url }}');"><a
+                                        href="http://127.0.0.1:8000/movie/{{ movie_s.id }}">{{ movie_s.name }}</a><br><span>{{ movie_s.desc }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="variety_right">
+                    <h2><a href="http://127.0.0.1:8000/list/{{ movie_a.id }}">{{ movie_a.name }}TOP</a></h2>
+                    <ul>
+                        {% for movie_s in move_all %}
+                            {% if movie_s.type.name == movie_a.name %}
+                                <li><a href="http://127.0.0.1:8000/movie/{{ movie_s.id }}"
+                                       title="{{ movie_s.name }}"><span>·</span>{{ movie_s.name }}
+                                </a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="nav_two">
+            <p class="nav_two_p nav_two_p_left"> < </p>
+            <p class="nav_two_p nav_two_p_right"> > </p>
+            <ul>
+                {% for item in active_movie %}
+                    <li style="background-image: url('{{ item.image.url }}');"><a href="{{ item.url }}"></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/homepage.js' %}"></script>
+{% endblock %}

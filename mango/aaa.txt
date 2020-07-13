@@ -1,0 +1,52 @@
+# 接口文档
+一、  主页
+1、接口功能
+    打开首页
+2、URL
+    http://127.0.0.1:8000
+3、HTTp传递参数
+    GET
+4、传递参数
+    参数	        必选	类型	        说明
+    types	        ture	string	    影视的所有种类信息
+    movie_banner	true	string	    影视轮播图的影视信息
+    move_sku        true	string	    所有影视的SKU
+    movie_all       true	string	    所有的影视信息
+    movie_logo      true	string	    所有的影视的展示标题
+    movie_vip       true	string	    VIP影视
+    active_movie    true	string	    影视活动页
+
+优化：1、第一次打开首页会把缓存写入到redis中，有一个过期时间，这样可以减少mysql的访问次数
+     2、影视的图片、名称、简介都是使用的admin储存，减少了代码量
+     3、使用模板继承，减少代码量
+
+
+二、详情页
+1、接口功能
+    单击一个影视可以跳转到这个影视的详情页
+2、URL
+    http://127.0.0.1:8000/movie/(?P<movie_id>\d+)
+3、HTTp传递参数
+    GET
+4、传递参数
+    参数	        必选	类型	        说明
+    sku	            ture	string	    获取将要进入影视详情页的 id=movie_id
+    types	        true	string	    获取影视分类信息
+    sku_s           true	string	    获取符合条件的影视信息
+
+
+一、  列表页
+1、接口功能
+    通过首页的标签打开某一种类的所有影视的列表页
+2、URL
+    http://127.0.0.1:8000/list/(?P<type_id>\d+)/(?P<for_id>\d+)
+3、HTTp传递参数
+    GET
+4、传递参数
+    参数	        必选	类型	        说明
+    type_all	    ture	string	    影视的所有种类信息
+    types       	true	string	    获取某一个影视的种类信息
+    movie_list      true	string	    获取某一个种类的所有影视信息
+    movie_type      true	string	    所有的影视信息SPU种类
+    bb              true	string	    通过request获取地址上的影视种类
+    user            true	string	    通过request获取用户信息

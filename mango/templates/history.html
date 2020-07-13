@@ -1,0 +1,107 @@
+{% extends 'base_forms.html' %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dianying.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+{% endblock %}
+{% block apple-banner %}
+    <div class="apple-banner">
+        <nav class="navbar navbar-transparent" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="http://127.0.0.1:8000/"><img alt="index" src="{% static 'image/mango_logo.png' %}"
+                                                          style="height: 40px; width: 160px; margin-top: -5px"></a>
+                    <a class="navbar-brand" href="#"><img alt="index" src="{% static 'image/xxsk.png' %}"
+                                                          style="height: 30px; width: 60px; margin-top: 2px"></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="navbar-form navbar-left" action="/search" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="q"
+                                       style="background: transparent; border-radius: 20px; border: rgba(99,131,117,0.8)"
+                                       placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default"
+                                    style="border-radius: 20px; background-color: #FC9700; border: 1px solid #FC9700; color: white">
+                                全网搜
+                            </button>
+                        </form>
+                        <li><a href="#">会员</a></li>
+                        <li><a href="#">创作投稿</a></li>
+                        <li><a href="#">饭团</a></li>
+                        <li><a href="#">消息</a></li>
+                        <li><a href="#">客户端</a></li>
+                        <li><a href="{% url 'record:record' %}">{{ user }}</a></li>
+                        <li><a href="{% url 'user:logout' %}">退出登录</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                {% for banner in movie_banner %}
+                    <div class="swiper-slide"
+                         style="background: #000 url('{{ banner.image.url }}') no-repeat 50% 10%;
+                                 background-size: 1770px 800px;">
+                        <h2 class="title txt" style="margin-top: 100px; margin-left: 100px">{{ banner.sku.name }}</h2>
+                        </h2>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-button-prev"><span></span></div>
+            <div class="swiper-button-next"><span></span></div>
+            <ul class="swiper-pagination autoplay">
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block container %}
+    <div class="bu_col">
+        <div class="buttom container">
+            <div class="left">
+                <ul>
+                    <li>VIP会员</li>
+                    <li>我的积分</li>
+                    <li>我的游戏</li>
+                    <li>播放记录</li>
+                    <li>我的预约</li>
+                    <li>我的动态</li>
+                    <li>我的饭团</li>
+                    <li>我的作品</li>
+                    <li>我的消息</li>
+                    <li>我的看单</li>
+                    <li>粉丝&关注</li>
+                    <li>我的卡卷</li>
+                    <li>购买记录</li>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="right-bottom">
+                    <ul>
+                        {% for item in movies_res %}
+                            <li>
+                                <a href="http://127.0.0.1:8000/movie/{{ item.id }}"><img src="{{ item.image.url }}"></a>
+                                <h4><a href="http://127.0.0.1:8000/movie/{{ item.id }}">{{ item.name }}</a></h4>
+                                <div class="operate">
+                                    <span class="prize">{{ item.type }}</span>
+                                    <span class="unit">{{ item.desc }}</span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
